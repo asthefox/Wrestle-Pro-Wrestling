@@ -30,7 +30,7 @@ public class Wrestler : MonoBehaviour {
 	public Strike strikeMove;
 	public Stunned stunnedMove;
 	
-	public WrestlerInput input;
+	public WrestlerInput inputDevice;
 	public Conflict currentConflict;
 	public ActionMove currentAction;
 	public Wrestler opponent;
@@ -61,11 +61,12 @@ public class Wrestler : MonoBehaviour {
 		
 		if (currentConflict != null) {
 			directionToOpponent = Vector3.Normalize ( opponent.transform.position - this.transform.position );
+			directionToOpponent = new Vector3( directionToOpponent.x, 0, directionToOpponent.z );
 			distanceToOpponent = Vector3.Distance(opponent.transform.position, this.transform.position);
 			switch (currentConflict.state) {
 			case Conflict.State.Approach:
 				if(state == State.Idle) {
-					input.HandleApproachInput();
+					inputDevice.HandleApproachInput();
 				}
 				else {
 					currentAction.UpdateMove();
@@ -82,7 +83,7 @@ public class Wrestler : MonoBehaviour {
 				break;
 			case Conflict.State.Resolution:
 				if(state == State.Grapple && !animation.isPlaying && !grappleMove.thrown) {
-					input.HandleGrappleInput();
+					inputDevice.HandleGrappleInput();
 				}
 				break;
 			case Conflict.State.Reset:
@@ -112,17 +113,16 @@ public class Wrestler : MonoBehaviour {
 		face.renderer.material = counterMat;
 	}
 	
-	public void StartStun(){
+	public void StartStun(float _stunTime){
+		stunnedMove.activeTime = _stunTime;
 		state = State.Stunned;
 		stunnedMove.StartMove();
 		face.renderer.material = stunMat;
 	}
 	
 	public void GrappleLatch(){
+		Debug.Log ("stop anim");
 		animation.Stop();
-		//leftShoulder.LookAt (opponent.rightGrip);
-		//rightShoulder.LookAt (opponent.leftGrip);
-		//rightShoulder.localRotation = Quaternion.Euler ( new Vector3(0,0,0));
 	}
 	
 	void Animate(){

@@ -10,7 +10,7 @@ public class Strike : ActionMove {
 		
 		owner.strikeMove = this;
 		
-		range = 5;
+		range = 2.5f;
 		damage = 0.02f;
 		manaChargeOnLanding = 0.02f;
 		strikeForce = 500f;
@@ -20,7 +20,7 @@ public class Strike : ActionMove {
 		cooldownTime = 0.200f;
 		
 		tellVelocity = -0.6f;
-		activeVelocity = 0.6f;
+		activeVelocity = 1.4f;
 		cooldownVelocity = 0.2f;
 	}
 	
@@ -49,6 +49,7 @@ public class Strike : ActionMove {
 	public override void LandMove()
 	{
 		base.LandMove();
+		owner.opponent.StartStun(0.2f);
 		timer = 0;
 		owner.opponent.rigidbody.AddForce((owner.directionToOpponent + new Vector3(0f,0f,0f)) * strikeForce);		
 		GameObject.Find("Box").rigidbody.AddForce((owner.directionToOpponent + new Vector3(0f,0f,0f)) * strikeForce);		

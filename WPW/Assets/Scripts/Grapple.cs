@@ -5,7 +5,7 @@ public class Grapple : ActionMove {
 	
 	public float armRotationAngle;
 	public float previousArmRotationTimer;
-	protected float previousArmRotationAngle;
+	public float previousArmRotationAngle;
 	protected Vector3 throwDir;
 	public float throwForce;
 	public bool thrown = false;
@@ -15,14 +15,14 @@ public class Grapple : ActionMove {
 		
 		owner.grappleMove = this;
 		
-		range = 4.8f;
+		range = 2.2f;
 
 		tellTime = 0.300f;
 		activeTime = 0.150f;
 		cooldownTime = 0.200f;
 		
 		tellVelocity = -0.9f;
-		activeVelocity = 0.6f;
+		activeVelocity = 2f;
 		cooldownVelocity = 0.1f;
 		
 		armRotationAngle = 0;
@@ -43,6 +43,8 @@ public class Grapple : ActionMove {
 	public override void LandMove()
 	{
 		base.LandMove();
+		owner.opponent.StartStun(0.1f);
+		armRotationAngle = previousArmRotationAngle = 0;
 		thrown = false;
 		owner.rigidbody.isKinematic = true;
 		owner.opponent.rigidbody.isKinematic = true;
@@ -113,6 +115,9 @@ public class Grapple : ActionMove {
 		previousArmRotationAngle = armRotationAngle;
 		armRotationAngle = _armRotationAngle;
 		
+		owner.rightShoulder.localRotation = Quaternion.Euler ( new Vector3(armRotationAngle,0,0));
+		owner.leftShoulder.localRotation = Quaternion.Euler ( new Vector3(armRotationAngle,0,0));
+		owner.opponent.transform.position = owner.leftHand.position + owner.transform.right * 0.6f;
 	
 //		previousArmRotationTimer += Time.deltaTime;
 //		if (previousArmRotationTimer > 0.05) {

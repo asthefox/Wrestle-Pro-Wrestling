@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class DebugInput : WrestlerInput
+public class AIInput : WrestlerInput
 {
 	public KeyCode grappleButton;
 	public KeyCode strikeButton;

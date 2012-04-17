@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class AIInput : WrestlerInput
+public class DebugInput : WrestlerInput
 {
 	public KeyCode grappleButton;
 	public KeyCode strikeButton;
@@ -26,5 +26,35 @@ public class AIInput : WrestlerInput
 			owner.StartCounter();
 		}
 	}
+	
+	public override void HandleGrappleInput () {
+//		base.HandleGrappleInput ();
+		bool shouldThrow = true;
+		if (Input.GetKeyDown (KeyCode.UpArrow)) {
+			owner.grappleMove.SetRotationAngle ( 1 );
+			owner.grappleMove.SetRotationAngle ( 0 );
+		}
+		else if (Input.GetKeyDown (KeyCode.DownArrow)){
+			owner.grappleMove.SetRotationAngle ( -1 );
+			owner.grappleMove.SetRotationAngle ( 0 );
+		}
+		else if (Input.GetKeyDown (KeyCode.LeftArrow)){
+			owner.grappleMove.SetRotationAngle ( -101 );
+			owner.grappleMove.SetRotationAngle ( -100 );
+		}
+		else if (Input.GetKeyDown (KeyCode.RightArrow)){
+			owner.grappleMove.SetRotationAngle ( -124 );
+			owner.grappleMove.SetRotationAngle ( -125 );
+		}
+		else {
+			shouldThrow = false;
+		}
+		
+		if(shouldThrow) {
+			//owner.face.renderer.material = owner.strikeMat;
+			owner.grappleMove.Throw();
+		}
+	}
 }
+
 

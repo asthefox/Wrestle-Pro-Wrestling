@@ -14,7 +14,7 @@ public class Counter : ActionMove {
 	public override void LandMove()
 	{
 		base.LandMove();
-		owner.opponent.StartStun();
+		owner.opponent.StartStun(1.2f);
 		owner.currentConflict.state = Conflict.State.Approach;
 	}
 	

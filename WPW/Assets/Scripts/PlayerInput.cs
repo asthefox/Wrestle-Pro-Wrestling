@@ -9,8 +9,6 @@ public class PlayerInput : WrestlerInput
 	
 	void Start(){
 		base.Start();
-		
-		
 	}
 	
 	public override void HandleApproachInput () {

@@ -8,11 +8,11 @@ public class WrestlerInput : MonoBehaviour
 	
 	public void Start(){
 		owner = GetComponent<Wrestler>();
-		owner.input = this;
+		owner.inputDevice = this;
 	}
 	
 	public virtual void HandleApproachInput () {}
 	
-	public virtual void HandleGrappleInput () {}
+	public virtual void HandleGrappleInput () { Debug.Log ("grapple input base"); }
 }
 
