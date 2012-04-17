@@ -5,7 +5,7 @@ public class Counter : ActionMove {
 
 	void Start () {
 		base.Start();
-		Debug.Log ("Strike Starting");
+		owner.counterMove = this;
 	}
 	
 	void Update () {

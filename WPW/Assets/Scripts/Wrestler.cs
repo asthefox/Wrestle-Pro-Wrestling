@@ -9,27 +9,57 @@ public class Wrestler : MonoBehaviour {
 		Grapple = 2,
 		Counter = 3
 	}
-	public State _state = State.Idle;
 	
+	public GameObject face;
+	
+	public Material strikeMat;
+	public Material counterMat;
+	public Material grappleMat;
+	public Material defaultMat;
+	
+	public State state = State.Idle;
+	
+	public Grapple grappleMove;
+	public Counter counterMove;
+	public Strike strikeMove;
+	
+	public WrestlerInput input;
 	public Conflict currentConflict;
+	public ActionMove currentAction;
 	public Wrestler opponent;
 	public Vector3 directionToOpponent;
+	public float distanceToOpponent;
 	public float walkSpeed = 5;
 	public float actionVelocity;
+	public float stopDistance = 2;
 	
 	
 	void Start () {
 		walkSpeed = .05f; //setting this again for now to compensate for prefabs not updating. Later remove this for custom inspector values
 		actionVelocity = 0;
+		face = transform.FindChild("Sphere").gameObject;
 	}
 	
 	void Update () {
 		if (currentConflict != null) {
 			directionToOpponent = Vector3.Normalize ( opponent.transform.position - this.transform.position );
-			
-			switch (currentConflict._state) {
+			distanceToOpponent = Vector3.Distance(opponent.transform.position, this.transform.position);
+			switch (currentConflict.state) {
 			case Conflict.State.Approach:
-				transform.Translate ( directionToOpponent * (walkSpeed * (1 + actionVelocity)) , Space.World);
+				if(state == State.Idle) {
+					input.HandleApproachInput();
+				}
+				else {
+					currentAction.UpdateMove();
+				}
+				if(distanceToOpponent > stopDistance)
+				{
+					transform.Translate ( directionToOpponent * (walkSpeed * (1 + actionVelocity)) , Space.World);
+				}
+				else
+				{
+					transform.Translate ( directionToOpponent * (walkSpeed * actionVelocity) , Space.World);
+				}
 				break;
 			case Conflict.State.Resolution:
 				
@@ -39,5 +69,23 @@ public class Wrestler : MonoBehaviour {
 				break;
 			}
 		}
+	}
+	
+	public void StartGrapple(){
+		state = State.Grapple;
+		grappleMove.StartMove();
+		face.renderer.material = grappleMat;
+	}
+	
+	public void StartStrike(){
+		state = State.Strike;
+		strikeMove.StartMove();
+		face.renderer.material = strikeMat;
+	}
+	
+	public void StartCounter(){
+		state = State.Counter;
+		counterMove.StartMove();
+		face.renderer.material = counterMat;
 	}
 }

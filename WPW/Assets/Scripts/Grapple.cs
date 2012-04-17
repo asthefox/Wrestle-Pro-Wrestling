@@ -5,10 +5,17 @@ public class Grapple : ActionMove {
 
 	void Start () {
 		base.Start();
-		Debug.Log ("Strike Starting");
+		
+		owner.grappleMove = this;
 	}
 	
-	void Update () {
+	protected override void UpdateActive() {
 		
+		if(CheckRange()) {
+			Debug.Log("In range for grapple!");
+			LandMove();
+		}
+		
+		base.UpdateActive();
 	}
 }

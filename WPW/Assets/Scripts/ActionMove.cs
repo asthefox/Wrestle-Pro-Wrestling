@@ -11,13 +11,15 @@ public class ActionMove : MonoBehaviour {
 	
 	public Wrestler owner;
 	
-	public State _state = State.Tell;
+	public State state = State.Tell;
 	public float timer = 0;
 	
+	public float range = 5;
+	
 	// All times in milliseconds
-	public float tellTime = 200;
-	public float activeTime = 200;
-	public float cooldownTime = 200;
+	public float tellTime = 0.200f;
+	public float activeTime = 0.200f;
+	public float cooldownTime = 0.200f;
 	
 	public float tellVelocity = 0;
 	public float activeVelocity = 0;
@@ -27,16 +29,24 @@ public class ActionMove : MonoBehaviour {
 	public void Start () {
 		owner = GetComponent<Wrestler>();
 		timer = 0;
-		_state = State.Tell;
-		//Debug.Log ("ActionMove Starting");
+		state = State.Tell;
+		
+		tellTime = 0.200f;
+		activeTime = 0.200f;
+		cooldownTime = 0.200f;
+	
+		tellVelocity = 0;
+		activeVelocity = 0;
+		cooldownVelocity = 0;	
 	}
 	
 	public void StartMove () {
+		owner.currentAction = this;
 		StartTell();
 	}
 	
 	public void UpdateMove () {
-		switch(_state){
+		switch(state){
 		case(State.Tell):
 			UpdateTell();
 			break;
@@ -51,20 +61,22 @@ public class ActionMove : MonoBehaviour {
 	
 	protected void StartTell() {
 		timer = 0;
-		_state = State.Tell;
+		state = State.Tell;
 	}
 	
 	protected void StartActive() {
 		timer = 0;
-		_state = State.Active;
+		state = State.Active;
 	}
 	
 	protected void StartCooldown() {
 		timer = 0;
-		_state = State.Cooldown;
+		state = State.Cooldown;
 	}
 	
-	protected void UpdateTell() {
+	protected virtual void UpdateTell() {
+		
+		Debug.Log("Updating Tell...");
 		
 		// Affect velocity
 		owner.actionVelocity = tellVelocity;
@@ -72,11 +84,14 @@ public class ActionMove : MonoBehaviour {
 		// Check whether to move to next state
 		timer += Time.deltaTime;
 		if(timer > tellTime) {
+			Debug.Log("Switching to Active...");
 			StartActive();
 		}
 	}
 	
-	protected void UpdateActive() {
+	protected virtual void UpdateActive() {
+		
+		Debug.Log("Updating Active...");
 		
 		// Affect velocity
 		owner.actionVelocity = activeVelocity;
@@ -88,7 +103,9 @@ public class ActionMove : MonoBehaviour {
 		}
 	}
 	
-	protected void UpdateCooldown() {
+	protected virtual void UpdateCooldown() {
+		
+		Debug.Log("Updating Cooldown...");
 		
 		// Affect velocity
 		owner.actionVelocity = cooldownVelocity;
@@ -102,6 +119,24 @@ public class ActionMove : MonoBehaviour {
 	
 	protected void FinishMove() {
 		// TODO: Tell owner that you're no longer doing this move
+		owner.state = Wrestler.State.Idle;
+		owner.actionVelocity = 0;
+		owner.face.renderer.material = owner.defaultMat;
+	}
+	
+	protected bool CheckRange() {
+		return (owner.distanceToOpponent < range);
+	}
+	
+	public virtual void LandMove() {
+		owner.currentConflict.SetResolution(this);
+	}
 		
+	public virtual void UpdateHitting() {
+		
+	}
+	
+	public virtual void EndHitting() {
+		owner.currentConflict.state = Conflict.State.Reset;
 	}
 }
