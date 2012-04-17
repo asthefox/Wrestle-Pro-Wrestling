@@ -12,7 +12,7 @@ public class Grapple : ActionMove {
 	protected override void UpdateActive() {
 		
 		if(CheckRange()) {
-			Debug.Log("In range for grapple!");
+			//Debug.Log("In range for grapple!");
 			LandMove();
 		}
 		

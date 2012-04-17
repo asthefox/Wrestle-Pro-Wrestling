@@ -76,7 +76,7 @@ public class ActionMove : MonoBehaviour {
 	
 	protected virtual void UpdateTell() {
 		
-		Debug.Log("Updating Tell...");
+		//Debug.Log("Updating Tell...");
 		
 		// Affect velocity
 		owner.actionVelocity = tellVelocity;
@@ -84,14 +84,14 @@ public class ActionMove : MonoBehaviour {
 		// Check whether to move to next state
 		timer += Time.deltaTime;
 		if(timer > tellTime) {
-			Debug.Log("Switching to Active...");
+			//Debug.Log("Switching to Active...");
 			StartActive();
 		}
 	}
 	
 	protected virtual void UpdateActive() {
 		
-		Debug.Log("Updating Active...");
+		//Debug.Log("Updating Active...");
 		
 		// Affect velocity
 		owner.actionVelocity = activeVelocity;
@@ -105,7 +105,7 @@ public class ActionMove : MonoBehaviour {
 	
 	protected virtual void UpdateCooldown() {
 		
-		Debug.Log("Updating Cooldown...");
+		//Debug.Log("Updating Cooldown...");
 		
 		// Affect velocity
 		owner.actionVelocity = cooldownVelocity;

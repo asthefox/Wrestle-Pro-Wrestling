@@ -31,13 +31,13 @@ public class Wrestler : MonoBehaviour {
 	public float distanceToOpponent;
 	public float walkSpeed = 5;
 	public float actionVelocity;
-	public float stopDistance = 2;
 	
 	
 	void Start () {
 		walkSpeed = .05f; //setting this again for now to compensate for prefabs not updating. Later remove this for custom inspector values
 		actionVelocity = 0;
 		face = transform.FindChild("Sphere").gameObject;
+		distanceToOpponent = 100;
 	}
 	
 	void Update () {
@@ -52,13 +52,13 @@ public class Wrestler : MonoBehaviour {
 				else {
 					currentAction.UpdateMove();
 				}
-				if(distanceToOpponent > stopDistance)
+				if(currentConflict.approachingDone)
 				{
-					transform.Translate ( directionToOpponent * (walkSpeed * (1 + actionVelocity)) , Space.World);
+					transform.Translate ( directionToOpponent * (walkSpeed * actionVelocity) , Space.World);
 				}
 				else
 				{
-					transform.Translate ( directionToOpponent * (walkSpeed * actionVelocity) , Space.World);
+					transform.Translate ( directionToOpponent * (walkSpeed * (1 + actionVelocity)) , Space.World);
 				}
 				break;
 			case Conflict.State.Resolution:

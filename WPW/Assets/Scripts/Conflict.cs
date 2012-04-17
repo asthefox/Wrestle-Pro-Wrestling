@@ -8,6 +8,9 @@ public class Conflict : MonoBehaviour {
 	
 	public ActionMove resolvingMove;
 	
+	public bool approachingDone;
+	public float approachingStopDistance;
+	
 	public enum State {
 		Approach = 0,
 		Resolution = 1,
@@ -16,18 +19,26 @@ public class Conflict : MonoBehaviour {
 	public State state = State.Approach;
 	
 	void Start () {
-			
+		approachingDone = false;
+		approachingStopDistance = 2;
 	}
 	
 	void Update () {
 	
 		switch(state) {
+		case State.Approach:
+			if(!approachingDone && wrestler1.distanceToOpponent < approachingStopDistance) {
+				Debug.Log("Stopping approach");
+				approachingDone = true;
+			}
+			break;
 		case State.Resolution:
 			resolvingMove.UpdateHitting();
 			break;
 		case State.Reset:
 			resolvingMove = null;
 			state = State.Approach;
+			approachingDone = false;
 			break;
 		}
 	}

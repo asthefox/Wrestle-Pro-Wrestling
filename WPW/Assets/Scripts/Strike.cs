@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Strike : ActionMove {
 	
-	public float strikeForce = 1000000f;
+	public float strikeForce = 500f;
 	
 	public void Start () {
 		base.Start();
@@ -24,14 +24,14 @@ public class Strike : ActionMove {
 	
 	protected override void UpdateActive() {
 		
-		Debug.Log("Checking range");
+		//Debug.Log("Checking range");
 		
 		if(CheckRange()) {
 			
 			StartCooldown();
 			
 			// Is opponent currently countering (i.e. did this attack get countered)?
-			Debug.Log("In range for strike!");
+			//Debug.Log("In range for strike!");
 			if(owner.opponent.state == Wrestler.State.Counter && 
 				owner.opponent.currentAction.state == ActionMove.State.Active) {
 				owner.opponent.currentAction.LandMove();
