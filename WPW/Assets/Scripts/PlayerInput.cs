@@ -25,6 +25,28 @@ public class PlayerInput : WrestlerInput
 		}
 	}
 	
+	public override void HandleGrappleInput () {
+		if (Input.GetMouseButtonDown (0)) {
+			// Set start of click
+			throwClickDownPos = Input.mousePosition;
+		}
+		
+		if (Input.GetMouseButton (0)){
+			float pAngle = 0;
+			pAngle = (throwClickDownPos.y - Input.mousePosition.y) / 2;
+			
+			
+			
+			if (pAngle > 45) pAngle = 45;
+			else if (pAngle < -125) pAngle = -125;
+			owner.grappleMove.SetRotationAngle (pAngle);
+		}
+		
+		if (Input.GetMouseButtonUp(0)) {
+			owner.grappleMove.Throw();
+		}
+	}
+	
 	public void OnGUI() {
 		if(owner.currentConflict != null && owner.currentConflict.state == Conflict.State.Approach)
 		{

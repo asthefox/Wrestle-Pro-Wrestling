@@ -4,6 +4,7 @@ using System.Collections;
 public class WrestlerInput : MonoBehaviour
 {
 	protected Wrestler owner;
+	protected Vector3 throwClickDownPos;
 	
 	public void Start(){
 		owner = GetComponent<Wrestler>();
@@ -11,5 +12,7 @@ public class WrestlerInput : MonoBehaviour
 	}
 	
 	public virtual void HandleApproachInput () {}
+	
+	public virtual void HandleGrappleInput () {}
 }
 

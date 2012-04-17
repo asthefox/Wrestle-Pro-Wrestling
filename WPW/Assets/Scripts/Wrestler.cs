@@ -35,6 +35,13 @@ public class Wrestler : MonoBehaviour {
 	public float walkSpeed = 5;
 	public float actionVelocity;
 	
+	public Transform leftShoulder;
+	public Transform rightShoulder;
+	public Transform leftHand;
+	public Transform rightHand;
+	public Transform leftGrip;
+	public Transform rightGrip;
+	
 	
 	void Start () {
 		walkSpeed = .05f; //setting this again for now to compensate for prefabs not updating. Later remove this for custom inspector values
@@ -44,6 +51,8 @@ public class Wrestler : MonoBehaviour {
 	}
 	
 	void Update () {
+		transform.rotation = Quaternion.Euler (new Vector3(0, transform.rotation.eulerAngles.y, 0));
+		
 		if (currentConflict != null) {
 			directionToOpponent = Vector3.Normalize ( opponent.transform.position - this.transform.position );
 			distanceToOpponent = Vector3.Distance(opponent.transform.position, this.transform.position);
@@ -66,7 +75,9 @@ public class Wrestler : MonoBehaviour {
 				}
 				break;
 			case Conflict.State.Resolution:
-				
+				if(state == State.Grapple && !animation.isPlaying && !grappleMove.thrown) {
+					input.HandleGrappleInput();
+				}
 				break;
 			case Conflict.State.Reset:
 				
@@ -101,6 +112,13 @@ public class Wrestler : MonoBehaviour {
 		face.renderer.material = stunMat;
 	}
 	
+	public void GrappleLatch(){
+		animation.Stop();
+		//leftShoulder.LookAt (opponent.rightGrip);
+		//rightShoulder.LookAt (opponent.leftGrip);
+		//rightShoulder.localRotation = Quaternion.Euler ( new Vector3(0,0,0));
+	}
+	
 	void Animate(){
 		if (state == State.Strike) {
 			if (strikeMove.state == ActionMove.State.Tell)
@@ -112,9 +130,11 @@ public class Wrestler : MonoBehaviour {
 		else if (state == State.Grapple){
 			if (grappleMove.state == ActionMove.State.Tell)
 				animation.Play("GrappleTell");
-			else if (grappleMove.state == ActionMove.State.Active)
-				animation.Play ("Grapple");
-			else animation.CrossFade ("Idle");
+			else if (grappleMove.state == ActionMove.State.Active) {
+				if (currentConflict.state == Conflict.State.Approach)
+					animation.Play ("Grapple");
+			}
+			//else animation.CrossFade ("Idle");
 		}
 		else animation.CrossFade ("Idle");
 	}

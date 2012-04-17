@@ -56,10 +56,12 @@ public class Strike : ActionMove {
 		if(state == ActionMove.State.Cooldown)
 			UpdateCooldown();
 		
-		timer += Time.deltaTime;
-		
-		if(timer > 1f)// && owner.opponent.rigidbody.velocity.magnitude < 1)
-			EndHitting();
+		else {
+			timer += Time.deltaTime;
+			
+			if(timer > 1f)// && owner.opponent.rigidbody.velocity.magnitude < 1)
+				EndHitting();
+		}
 	}
 
 }

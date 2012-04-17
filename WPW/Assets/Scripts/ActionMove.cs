@@ -16,7 +16,7 @@ public class ActionMove : MonoBehaviour {
 	
 	public float range = 5;
 	
-	// All times in milliseconds
+	// All times in seconds
 	public float tellTime = 0.200f;
 	public float activeTime = 0.200f;
 	public float cooldownTime = 0.200f;
@@ -70,7 +70,7 @@ public class ActionMove : MonoBehaviour {
 		state = State.Active;
 	}
 	
-	protected void StartCooldown() {
+	public void StartCooldown() {
 		timer = 0;
 		state = State.Cooldown;
 	}
@@ -121,6 +121,7 @@ public class ActionMove : MonoBehaviour {
 	protected void FinishMove() {
 		// TODO: Tell owner that you're no longer doing this move
 		owner.state = Wrestler.State.Idle;
+		state = State.Tell;
 		owner.actionVelocity = 0;
 		owner.face.renderer.material = owner.defaultMat;
 	}
