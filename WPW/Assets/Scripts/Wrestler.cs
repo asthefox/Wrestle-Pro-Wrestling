@@ -55,6 +55,7 @@ public class Wrestler : MonoBehaviour {
 				if(distanceToOpponent > stopDistance)
 				{
 					transform.Translate ( directionToOpponent * (walkSpeed * (1 + actionVelocity)) , Space.World);
+					transform.LookAt ( opponent.transform.position );
 				}
 				else
 				{
