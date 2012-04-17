@@ -15,6 +15,10 @@ public class ActionMove : MonoBehaviour {
 	public float timer = 0;
 	
 	public float range = 5;
+	public float damage = 0.0f;
+	public float manaChargeOnStartup = 0.0f;
+	public float manaChargeOnLanding = 0.0f;
+	public float manaCost = 0.0f;
 	
 	// All times in seconds
 	public float tellTime = 0.200f;
@@ -43,6 +47,8 @@ public class ActionMove : MonoBehaviour {
 	public void StartMove () {
 		owner.currentAction = this;
 		timer = 0;
+		owner.ChangeMana(-manaCost);
+		owner.ChangeMana(manaChargeOnStartup);
 		StartTell();
 	}
 	
@@ -131,6 +137,8 @@ public class ActionMove : MonoBehaviour {
 	}
 	
 	public virtual void LandMove() {
+		owner.ChangeMana(manaChargeOnLanding);
+		owner.opponent.ChangeStamina(-damage);
 		owner.currentConflict.SetResolution(this);
 	}
 		

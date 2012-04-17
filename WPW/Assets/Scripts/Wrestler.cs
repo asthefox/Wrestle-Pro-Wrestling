@@ -11,6 +11,10 @@ public class Wrestler : MonoBehaviour {
 		Stunned = 4
 	}
 	
+	public float stamina = 1.0f;
+	public float mana = 0.0f;
+	
+	
 	public GameObject face;
 	
 	public Material strikeMat;
@@ -48,6 +52,8 @@ public class Wrestler : MonoBehaviour {
 		actionVelocity = 0;
 		face = transform.FindChild("Model/Pelvis/Waist/Neck/Head/Sunglasses").gameObject;
 		distanceToOpponent = 100;
+		stamina = 1.0f;
+		mana = 0.0f;
 	}
 	
 	void Update () {
@@ -137,5 +143,36 @@ public class Wrestler : MonoBehaviour {
 			//else animation.CrossFade ("Idle");
 		}
 		else animation.CrossFade ("Idle");
+	}
+	
+	public void ChangeMana(float val) {
+		mana += val;
+		Mathf.Clamp01(mana);
+	}
+	
+	public void ChangeStamina(float val) {
+		stamina += val;
+		Mathf.Clamp01(stamina);
+	}
+	
+	
+	public int CalculateKickout()
+	{
+		float kickoutOdds = 0.05f + (1.5f * stamina);  
+		float randomVal = Random.value;
+		float difference = kickoutOdds - randomVal;
+		
+		if(difference > 60){
+			return 1;
+		}
+		else if(difference > 30){
+			return 2;
+		}
+		else if(difference >= 0){
+			return 3;
+		}
+		else{
+			return -1;
+		}
 	}
 }

@@ -11,6 +11,8 @@ public class Strike : ActionMove {
 		owner.strikeMove = this;
 		
 		range = 5;
+		damage = 0.02f;
+		manaChargeOnLanding = 0.02f;
 		strikeForce = 500f;
 
 		tellTime = 0.200f;
