@@ -39,7 +39,7 @@ public class Wrestler : MonoBehaviour {
 	void Start () {
 		walkSpeed = .05f; //setting this again for now to compensate for prefabs not updating. Later remove this for custom inspector values
 		actionVelocity = 0;
-		face = transform.FindChild("Model/Pelvis/Waist/Torso/Neck/Head/Sunglasses").gameObject;
+		face = transform.FindChild("Model/Pelvis/Waist/Neck/Head/Sunglasses").gameObject;
 		distanceToOpponent = 100;
 	}
 	
