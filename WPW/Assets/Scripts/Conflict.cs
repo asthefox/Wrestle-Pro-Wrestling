@@ -6,8 +6,7 @@ public class Conflict : MonoBehaviour {
 	public Wrestler wrestler1;
 	public Wrestler wrestler2;
 	
-	public enum State 
-	{
+	public enum State {
 		Approach = 0,
 		Resolution = 1,
 		Reset = 2
