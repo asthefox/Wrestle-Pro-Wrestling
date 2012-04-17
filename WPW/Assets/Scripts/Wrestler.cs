@@ -73,6 +73,8 @@ public class Wrestler : MonoBehaviour {
 				break;
 			}
 		}
+		
+		Animate();
 	}
 	
 	public void StartGrapple(){
@@ -97,5 +99,23 @@ public class Wrestler : MonoBehaviour {
 		state = State.Stunned;
 		stunnedMove.StartMove();
 		face.renderer.material = stunMat;
+	}
+	
+	void Animate(){
+		if (state == State.Strike) {
+			if (strikeMove.state == ActionMove.State.Tell)
+				animation.Play("StrikeTell");
+			else if (strikeMove.state == ActionMove.State.Active)
+				animation.Play ("Strike");
+			else animation.CrossFade ("Idle");
+		}
+		else if (state == State.Grapple){
+			if (grappleMove.state == ActionMove.State.Tell)
+				animation.Play("GrappleTell");
+			else if (grappleMove.state == ActionMove.State.Active)
+				animation.Play ("Grapple");
+			else animation.CrossFade ("Idle");
+		}
+		else animation.CrossFade ("Idle");
 	}
 }
