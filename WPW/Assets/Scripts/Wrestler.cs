@@ -59,6 +59,7 @@ public class Wrestler : MonoBehaviour {
 				else
 				{
 					transform.Translate ( directionToOpponent * (walkSpeed * (1 + actionVelocity)) , Space.World);
+					transform.LookAt ( opponent.transform.position );
 				}
 				break;
 			case Conflict.State.Resolution:
