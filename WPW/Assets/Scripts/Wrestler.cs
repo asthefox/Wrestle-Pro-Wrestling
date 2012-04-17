@@ -7,10 +7,12 @@ public class Wrestler : MonoBehaviour {
 	public Wrestler opponent;
 	public Vector3 directionToOpponent;
 	public float walkSpeed = 5;
+	public float actionVelocity;
 	
 	
 	void Start () {
-		walkSpeed = 5; //setting this again for now to compensate for prefabs not updating. Later remove this for custom inspector values
+		walkSpeed = .05f; //setting this again for now to compensate for prefabs not updating. Later remove this for custom inspector values
+		actionVelocity = 0;
 	}
 	
 	void Update () {
@@ -19,7 +21,7 @@ public class Wrestler : MonoBehaviour {
 			
 			switch (currentConflict._state) {
 			case Conflict.State.Approach:
-				//transform.Translate ( directionToOpponent * walkSpeed );
+				transform.Translate ( directionToOpponent * (walkSpeed+actionVelocity) , Space.World);
 				break;
 			case Conflict.State.Resolution:
 				
