@@ -37,16 +37,17 @@ public class PlayerInput : WrestlerInput
 		strikePressed = false;
 		counterPressed = false;
 		
-		if (GUI.Button (Rect (10,10,100,60), "Grapple")){
-			grapplePressed = true;
-		}
-		if (GUI.Button (Rect (10,70,100,60), "Strike")){
-			strikePressed = true;
-		}
-		if (GUI.Button (Rect (10,130,100,60), "Counter")){
-			counterPressed = true;
-		}
-			
+		if(owner.state == Wrestler.State.Idle){
+			if (GUI.Button(new Rect (10,10,100,60), "Grapple")){
+				grapplePressed = true;
+			}
+			if (GUI.Button (new Rect (10,70,100,60), "Strike")){
+				strikePressed = true;
+			}
+			if (GUI.Button (new Rect (10,130,100,60), "Counter")){
+				counterPressed = true;
+			}
+		}		
 	}
 }
 
