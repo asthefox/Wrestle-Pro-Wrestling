@@ -7,7 +7,8 @@ public class Wrestler : MonoBehaviour {
 		Idle = 0,
 		Strike = 1,
 		Grapple = 2,
-		Counter = 3
+		Counter = 3,
+		Stunned = 4
 	}
 	
 	public GameObject face;
@@ -16,12 +17,14 @@ public class Wrestler : MonoBehaviour {
 	public Material counterMat;
 	public Material grappleMat;
 	public Material defaultMat;
+	public Material stunMat;
 	
 	public State state = State.Idle;
 	
 	public Grapple grappleMove;
 	public Counter counterMove;
 	public Strike strikeMove;
+	public Stunned stunnedMove;
 	
 	public WrestlerInput input;
 	public Conflict currentConflict;
@@ -88,5 +91,11 @@ public class Wrestler : MonoBehaviour {
 		state = State.Counter;
 		counterMove.StartMove();
 		face.renderer.material = counterMat;
+	}
+	
+	public void StartStun(){
+		state = State.Stunned;
+		stunnedMove.StartMove();
+		face.renderer.material = stunMat;
 	}
 }

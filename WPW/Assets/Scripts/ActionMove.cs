@@ -42,6 +42,7 @@ public class ActionMove : MonoBehaviour {
 	
 	public void StartMove () {
 		owner.currentAction = this;
+		timer = 0;
 		StartTell();
 	}
 	
@@ -98,7 +99,7 @@ public class ActionMove : MonoBehaviour {
 		
 		// Check whether to move to next state
 		timer += Time.deltaTime;
-		if(timer > tellTime) {
+		if(timer > activeTime) {
 			StartCooldown();
 		}
 	}
@@ -112,7 +113,7 @@ public class ActionMove : MonoBehaviour {
 		
 		// Check whether to move to next state
 		timer += Time.deltaTime;
-		if(timer > tellTime) {
+		if(timer > cooldownTime) {
 			FinishMove();
 		}
 	}
