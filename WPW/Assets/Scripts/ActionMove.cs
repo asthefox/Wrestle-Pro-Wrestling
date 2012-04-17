@@ -25,6 +25,7 @@ public class ActionMove : MonoBehaviour {
 	
 
 	public void Start () {
+		owner = GetComponent<Wrestler>();
 		timer = 0;
 		_state = State.Tell;
 		//Debug.Log ("ActionMove Starting");
@@ -65,6 +66,9 @@ public class ActionMove : MonoBehaviour {
 	
 	protected void UpdateTell() {
 		
+		// Affect velocity
+		owner.actionVelocity = tellVelocity;
+		
 		// Check whether to move to next state
 		timer += Time.deltaTime;
 		if(timer > tellTime) {
@@ -73,7 +77,10 @@ public class ActionMove : MonoBehaviour {
 	}
 	
 	protected void UpdateActive() {
-
+		
+		// Affect velocity
+		owner.actionVelocity = activeVelocity;
+		
 		// Check whether to move to next state
 		timer += Time.deltaTime;
 		if(timer > tellTime) {
@@ -82,6 +89,9 @@ public class ActionMove : MonoBehaviour {
 	}
 	
 	protected void UpdateCooldown() {
+		
+		// Affect velocity
+		owner.actionVelocity = cooldownVelocity;
 		
 		// Check whether to move to next state
 		timer += Time.deltaTime;
@@ -92,5 +102,6 @@ public class ActionMove : MonoBehaviour {
 	
 	protected void FinishMove() {
 		// TODO: Tell owner that you're no longer doing this move
+		
 	}
 }

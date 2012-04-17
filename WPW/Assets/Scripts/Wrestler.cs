@@ -21,7 +21,7 @@ public class Wrestler : MonoBehaviour {
 			
 			switch (currentConflict._state) {
 			case Conflict.State.Approach:
-				transform.Translate ( directionToOpponent * (walkSpeed+actionVelocity) , Space.World);
+				transform.Translate ( directionToOpponent * (walkSpeed * (1 + actionVelocity)) , Space.World);
 				break;
 			case Conflict.State.Resolution:
 				
