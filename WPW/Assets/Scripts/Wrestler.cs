@@ -3,6 +3,14 @@ using System.Collections;
 
 public class Wrestler : MonoBehaviour {
 	
+	public enum State {
+		Idle = 0,
+		Strike = 1,
+		Grapple = 2,
+		Counter = 3
+	}
+	public State _state = State.Idle;
+	
 	public Conflict currentConflict;
 	public Wrestler opponent;
 	public Vector3 directionToOpponent;
